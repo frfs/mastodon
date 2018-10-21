@@ -2,7 +2,7 @@ version: '3'
 services:
   mstdn-nginx:
     restart: always
-    image: nginx:latest
+    image: nginx:1.15
     ports:
       - 9090:9090
     env_file: .env.production
