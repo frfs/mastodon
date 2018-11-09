@@ -1,22 +1,5 @@
-version: '3'
+version: '3.5'
 services:
-  mstdn-nginx:
-    restart: always
-    image: nginx:1.15
-    ports:
-      - 9090:9090
-    env_file: .env.production
-    links:
-      - web
-      - streaming
-    volumes:
-      - ./settings/nginx/conf.d:/etc/nginx/conf.d:ro
-      - ./settings/nginx/conf:/etc/nginx/conf/:ro
-      - ../nginx_proxy/certs/:/etc/nginx/certs/:ro
-    networks:
-      - front
-      - back-mstdn
-
   db:
     restart: always
     image: postgres:9.6-alpine-custom
@@ -91,6 +74,5 @@ services:
     volumes:
       - ./public/system:/mastodon/public/system
 networks:
-  front:
-    external: true
   back-mstdn:
+    name: back-mstdn
