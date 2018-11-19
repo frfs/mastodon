@@ -16,8 +16,8 @@ services:
     volumes:
       - ./redis:/data
   web:
-    build: .
-    #image: tootsuite/mastodon
+    #build: .
+    image: frfs/mastodon
     restart: always
     env_file: .env.production
     command: bash -c "rm -f /mastodon/tmp/pids/server.pid; bundle exec rails s -p 3000 -b '0.0.0.0'"
@@ -33,8 +33,8 @@ services:
       - ./public/system:/mastodon/public/system
 
   streaming:
-    build: .
-    #image: tootsuite/mastodon
+    #build: .
+    image: frfs/mastodon
     restart: always
     env_file: .env.production
     command: yarn start
@@ -47,8 +47,8 @@ services:
       - redis
 
   sidekiq:
-    build: .
-    #image: tootsuite/mastodon
+    #build: .
+    image: frfs/mastodon
     restart: always
     env_file: .env.production
     command: bundle exec sidekiq -q default -q push -q mailers
@@ -61,8 +61,8 @@ services:
       - ./public/system:/mastodon/public/system
 
   sidekiq_2:
-    build: .
-    #image: tootsuite/mastodon
+    #build: .
+    image: frfs/mastodon
     restart: always
     env_file: .env.production
     command: bundle exec sidekiq -c 10 -q pull
