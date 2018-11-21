@@ -51,7 +51,7 @@ services:
     image: frfs/mastodon
     restart: always
     env_file: .env.production
-    command: bundle exec sidekiq -q default -q push -q mailers
+    command: bundle exec sidekiq -c 20 -q default -q push -q mailers -q pull
     depends_on:
       - db
       - redis
@@ -60,19 +60,6 @@ services:
     volumes:
       - ./public/system:/mastodon/public/system
 
-  sidekiq_2:
-    #build: .
-    image: frfs/mastodon
-    restart: always
-    env_file: .env.production
-    command: bundle exec sidekiq -c 10 -q pull
-    depends_on:
-      - db
-      - redis
-    networks:
-      - back-mstdn
-    volumes:
-      - ./public/system:/mastodon/public/system
 networks:
   back-mstdn:
     name: back-mstdn
