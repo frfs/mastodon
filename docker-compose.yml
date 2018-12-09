@@ -63,4 +63,4 @@ services:
 networks:
   back-mstdn:
     name: back-mstdn
-      external: true
+    external: true
