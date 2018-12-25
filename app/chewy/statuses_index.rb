@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 class StatusesIndex < Chewy::Index
-  class StatusesIndex < Chewy::Index
     settings index: { refresh_interval: '15m' }, analysis: {
       tokenizer: {
         kuromoji_user_dict: {
