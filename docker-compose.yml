@@ -5,6 +5,8 @@ services:
     image: postgres:9.6-alpine
     networks:
       - back-mstdn
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "postgres"]
     volumes:
       - ./postgres:/var/lib/postgresql/data
 
@@ -13,6 +15,10 @@ services:
     image: redis:4.0-alpine
     networks:
       - back-mstdn
+    volumes:
+      - ./redis:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
     volumes:
       - ./redis:/data
       
@@ -28,6 +34,9 @@ services:
       - back-mstdn
     volumes:
       - ./elasticsearch:/usr/share/elasticsearch/data
+    healthcheck:
+      test: ["CMD-SHELL", "curl --silent --fail localhost:9200/_cluster/health || exit 1"]
+
   web:
     #build: .
     image: frfs/mastodon
@@ -36,6 +45,8 @@ services:
     command: bash -c "rm -f /mastodon/tmp/pids/server.pid; bundle exec rails s -p 3000 -b '0.0.0.0'"
     networks:
       - back-mstdn
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q --spider --header 'x-forwarded-proto: https' --proxy off localhost:3000/api/v1/instance || exit 1"]
     ports:
       - "3000:3000"
     depends_on:
@@ -53,6 +64,8 @@ services:
     command: yarn start
     networks:
       - back-mstdn
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q --spider --header 'x-forwarded-proto: https' --proxy off localhost:4000/api/v1/streaming/health || exit 1"]
     ports:
       - "127.0.0.1:4000:4000"
     depends_on:
