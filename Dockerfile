@@ -31,6 +31,8 @@ RUN apk -U upgrade \
     libidn-dev \
     libressl \
     libtool \
+    libxml2-dev \
+    libxslt-dev \
     postgresql-dev \
     protobuf-dev \
     python \
@@ -44,6 +46,8 @@ RUN apk -U upgrade \
     imagemagick \
     libidn \
     libpq \
+    libxml2 \
+    libxslt \
     protobuf \
     tini \
     tzdata \
