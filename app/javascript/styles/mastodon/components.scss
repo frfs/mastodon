@@ -476,7 +476,7 @@
         opacity: 0;
         transition: opacity .1s ease;
 
-        input {
+        textarea {
           background: transparent;
           color: $secondary-text-color;
           border: 0;
@@ -5163,7 +5163,7 @@ noscript {
 
   .icon-button {
     flex: 0 0 auto;
-    margin-left: 5px;
+    margin: 0 5px;
   }
 }
 
