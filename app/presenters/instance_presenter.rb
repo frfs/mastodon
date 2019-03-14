@@ -2,9 +2,7 @@
 
 class InstancePresenter
   delegate(
-    :closed_registrations_message,
     :site_contact_email,
-    :open_registrations,
     :site_title,
     :site_short_description,
     :site_description,
@@ -34,7 +32,7 @@ class InstancePresenter
   end
 
   def sample_accounts
-    Rails.cache.fetch('sample_accounts', expires_in: 12.hours) { Account.local.searchable.joins(:account_stat).popular.limit(3) }
+    Rails.cache.fetch('sample_accounts', expires_in: 12.hours) { Account.discoverable.popular.limit(3) }
   end
 
   def version_number
