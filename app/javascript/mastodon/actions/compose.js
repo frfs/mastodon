@@ -161,7 +161,7 @@ export function submitCompose(routerHistory, primary) {
         routerHistory.goBack();
       }
 
-      dispatch(insertIntoTagHistory(response.data.tags, status));
+      //dispatch(insertIntoTagHistory(response.data.tags, status));
       dispatch(submitComposeSuccess({ ...response.data }));
 
       // To make the app more responsive, immediately push the status
