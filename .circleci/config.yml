@@ -6,5 +6,5 @@ jobs:
       - checkout
       - run: |
           docker login -u ${DOCKER_USER} -p ${DOCKER_PASSWORD}
-          docker build -t frfs/mastodon . --build-arg DEFAULT_HASHTAG=furufuru_tech
+          docker build -t frfs/mastodon . --build-arg DEFAULT_HASHTAG=frfr
           docker push frfs/mastodon 
