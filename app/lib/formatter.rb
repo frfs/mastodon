@@ -134,7 +134,7 @@ class Formatter
     end
   end
 
-  def encode_custom_emojis(html, emojis, animate = true)
+  def encode_custom_emojis(html, emojis, animate = false)
     return html if emojis.empty?
 
     emoji_map = if animate
