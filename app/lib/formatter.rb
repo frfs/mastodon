@@ -137,11 +137,7 @@ class Formatter
   def encode_custom_emojis(html, emojis, animate = false)
     return html if emojis.empty?
 
-    emoji_map = if animate
-                  emojis.each_with_object({}) { |e, h| h[e.shortcode] = full_asset_url(e.image.url) }
-                else
-                  emojis.each_with_object({}) { |e, h| h[e.shortcode] = full_asset_url(e.image.url(:static)) }
-                end
+    emoji_map = emojis.each_with_object({}) { |e, h| h[e.shortcode] = full_asset_url(e.image.url) }
 
     i                     = -1
     tag_open_index        = nil
