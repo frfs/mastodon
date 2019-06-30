@@ -158,7 +158,7 @@ const updateSuggestionTags = (state, token) => {
 
 const insertEmoji = (state, position, emojiData, needsSpace) => {
   const oldText = state.get('text');
-  const emoji = needsSpace ? '\u200B' + emojiData.native : emojiData.native;
+  const emoji = needsSpace ? ' ' + emojiData.native : emojiData.native;
 
   return state.merge({
     text: `${oldText.slice(0, position)}${emoji} ${oldText.slice(position)}`,
