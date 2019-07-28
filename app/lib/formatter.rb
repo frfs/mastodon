@@ -137,7 +137,7 @@ class Formatter
   def encode_custom_emojis(html, emojis, animate = false)
     return html if emojis.empty?
 
-    emoji_map = emojis.each_with_object({}) { |e, h| h[e.shortcode] = full_asset_url(e.image.url) }
+    emoji_map = emojis.each_with_object({}) { |e, h| h[e.shortcode] = [full_asset_url(e.image.url), full_asset_url(e.image.url(:static))] }
 
     i                     = -1
     tag_open_index        = nil
@@ -153,7 +153,8 @@ class Formatter
         emoji     = emoji_map[shortcode]
 
         if emoji
-          replacement = "<img draggable=\"false\" class=\"emojione\" alt=\":#{encode(shortcode)}:\" title=\":#{encode(shortcode)}:\" src=\"#{encode(emoji)}\" />"
+          original_url, static_url = emoji
+          replacement = "<img draggable=\"false\" class=\"emojione\" alt=\":#{encode(shortcode)}:\" title=\":#{encode(shortcode)}:\" src=\"#{encode(original_url)}\" />"
           before_html = shortname_start_index.positive? ? html[0..shortname_start_index - 1] : ''
           html        = before_html + replacement + html[i + 1..-1]
           i          += replacement.size - (shortcode.size + 2) - 1
