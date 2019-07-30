@@ -12,9 +12,7 @@ class ProcessHashtagsService < BaseService
     end
     records = []
 
-    tags.map { |str| str.mb_chars.downcase }.uniq(&:to_s).each do |name|
-      tag = Tag.where(name: name).first_or_create(name: name)
-
+    Tag.find_or_create_by_names(tags) do |tag|
       status.tags << tag
       records << tag
 
