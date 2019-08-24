@@ -423,6 +423,13 @@ en:
       custom_css:
         desc_html: Modify the look with CSS loaded on every page
         title: Custom CSS
+      domain_blocks:
+        all: To everyone
+        disabled: To no one
+        title: Show domain blocks
+        users: To logged-in local users
+      domain_blocks_rationale:
+        title: Show rationale
       hero:
         desc_html: Displayed on the frontpage. At least 600x100px recommended. When not set, falls back to server thumbnail
         title: Hero image
@@ -492,6 +499,7 @@ en:
         delete: Delete
         nsfw_off: Mark as not sensitive
         nsfw_on: Mark as sensitive
+      deleted: Deleted
       failed_to_execute: Failed to execute
       media:
         title: Media
@@ -630,6 +638,23 @@ en:
     people:
       one: "%{count} person"
       other: "%{count} people"
+  domain_blocks:
+    blocked_domains: List of limited and blocked domains
+    description: This is the list of servers that %{instance} limits or reject federation with.
+    domain: Domain
+    media_block: Media block
+    no_domain_blocks: "(No domain blocks)"
+    severity: Severity
+    severity_legend:
+      media_block: Media files coming from the server are neither fetched, stored, or displayed to the user.
+      silence: Accounts from silenced servers can be found, followed and interacted with, but their toots will not appear in the public timelines, and notifications from them will not reach local users who are not following them.
+      suspension: No content from suspended servers is stored or displayed, nor is any content sent to them. Interactions from suspended servers are ignored.
+      suspension_disclaimer: Suspended servers may occasionally retrieve public content from this server.
+      title: Severities
+    show_rationale: Show rationale
+    silence: Silence
+    suspension: Suspension
+    title: "%{instance} List of blocked instances"
   domain_validator:
     invalid_domain: is not a valid domain name
   errors:
@@ -1090,7 +1115,9 @@ en:
         disable: While your account is frozen, your account data remains intact, but you cannot perform any actions until it is unlocked.
         silence: While your account is limited, only people who are already following you will see your toots on this server, and you may be excluded from various public listings. However, others may still manually follow you.
         suspend: Your account has been suspended, and all of your toots and your uploaded media files have been irreversibly removed from this server, and servers where you had followers.
+      get_in_touch: You can reply to this e-mail to get in touch with the staff of %{instance}.
       review_server_policies: Review server policies
+      statuses: 'Specifically, for:'
       subject:
         disable: Your account %{acct} has been frozen
         none: Warning for %{acct}
