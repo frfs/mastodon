@@ -718,6 +718,9 @@ en:
       title: Filters
     new:
       title: Add new filter
+  follow_tags:
+    add_new: Add new
+    hint_html: "<strong>What are follow hashtags?</strong> They are a collection of hashtags you follow. From the posts with hashtags received by the server, the one with the hashtag specified here is inserted into the home timeline."
   footer:
     developers: Developers
     more: More…
@@ -954,6 +957,8 @@ en:
     edit_profile: Edit profile
     export: Data export
     featured_tags: Featured hashtags
+    follow_and_subscriptions: Follows and subscriptions
+    follow_tags: Following hashtags
     identity_proofs: Identity proofs
     import: Import
     import_and_export: Import and export

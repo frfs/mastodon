@@ -23,6 +23,7 @@ class Tag < ApplicationRecord
   has_and_belongs_to_many :sample_accounts, -> { searchable.discoverable.popular.limit(3) }, class_name: 'Account'
 
   has_many :featured_tags, dependent: :destroy, inverse_of: :tag
+  has_many :follow_tags, dependent: :destroy, inverse_of: :tag
   has_one :account_tag_stat, dependent: :destroy
 
   HASHTAG_NAME_RE = '([[:word:]_][[:word:]_·]*[[:alpha:]_·][[:word:]_·]*[[:word:]_])|([[:word:]_]*[[:alpha:]][[:word:]_]*)'
