@@ -677,6 +677,16 @@ ja:
     directory: ディレクトリ
     explanation: 関心を軸にユーザーを発見しよう
     explore_mastodon: "%{title}を探索"
+  domain_subscribes:
+    add_new: 追加
+    edit:
+      title: 編集
+    exclude_reblog: 含めない
+    hint_html: "<strong>ドメインの購読とは何ですか？</strong> 指定したドメインの公開投稿をホームタイムラインまたはリストに挿入します。サーバが受け取っている投稿（連合タイムライン）が対象です。"
+    home: ホーム
+    include_reblog: 含める
+    new:
+      title: 新規ドメイン購読を追加
   domain_validator:
     invalid_domain: は無効なドメイン名です
   errors:
@@ -712,11 +722,16 @@ ja:
     lists: リスト
     mutes: ミュート
     storage: メディア
+  favourite_tags:
+    add_new: 追加
+    errors:
+      limit: お気に入りハッシュタグの上限に達しました
+    hint_html: "<strong>お気に入りのハッシュタグとは何ですか？</strong> それらはあなた自身のためにだけ使用される、ハッシュタグを活用したブラウジングを助けるためのツールです。すばやくタイムラインを切り替えることができます。"
   featured_tags:
     add_new: 追加
-    hint_html: "<strong>注目のハッシュタグとは？</strong>プロフィールページに目立つ形で表示され、そのハッシュタグのついたあなたの公開投稿だけを抽出して閲覧できるようにします。クリエイティブな仕事や長期的なプロジェクトを追うのに優れた機能です。"
     errors:
       limit: 注目のハッシュタグの上限に達しました
+    hint_html: "<strong>注目のハッシュタグとは？</strong>プロフィールページに目立つ形で表示され、そのハッシュタグのついたあなたの公開投稿だけを抽出して閲覧できるようにします。クリエイティブな仕事や長期的なプロジェクトを追うのに優れた機能です。"
   follow_tags:
     add_new: 追加
     hint_html: "<strong>ハッシュタグのフォローとは何ですか？</strong> それらはあなたがフォローするハッシュタグのコレクションです。サーバが受け取ったハッシュタグ付きの投稿の中から、ここで指定したハッシュタグのついた投稿をホームタイムラインに挿入します。"
@@ -808,16 +823,20 @@ ja:
     title: 新規ユーザーの招待
   keyword_subscribes:
     add_new: 追加
+    disabled: 無効
     edit:
       title: 編集
+    enabled: 有効
     errors:
       duplicate: 既に同じ内容が登録されています
       limit: キーワード購読の登録可能数の上限に達しました
       regexp: "正規表現に誤りがあります: %{message}"
     hint_html: "<strong>キーワードの購読とは何ですか？</strong> 指定した単語のいずれか、または正規表現に一致する公開投稿をホームタイムラインに挿入します。サーバが受け取っている投稿（連合タイムライン）が対象です。"
+    home: ホーム
     ignorecase:
-      enabled: 区別しない
-      disabled: 区別する
+      enabled: 無視
+      disabled: 区別
+    ignore_block: 無視
     index:
       delete: 削除
       title: キーワードの購読
@@ -827,6 +846,7 @@ ja:
       enabled: 正規表現
       disabled: キーワード
   lists:
+    add_new: 新しいリストを追加
     errors:
       limit: リストの上限に達しました
   media_attachments:
@@ -1004,16 +1024,18 @@ ja:
     title: セッション
   settings:
     account: アカウント
-    account_subscribes: アカウントの購読
     account_settings: アカウント設定
+    account_subscribes: アカウントの購読
     aliases: アカウントエイリアス
     appearance: 外観
     authorized_apps: 認証済みアプリ
     back: Mastodon に戻る
     delete: アカウントの削除
     development: 開発
+    domain_subscribes: ドメインの購読
     edit_profile: プロフィールを編集
     export: データのエクスポート
+    favourite_tags: お気に入りハッシュタグ
     featured_tags: 注目のハッシュタグ
     follow_and_subscriptions: フォロー・購読
     follow_tags: ハッシュタグのフォロー
@@ -1205,14 +1227,14 @@ ja:
       edit_profile_step: アイコンやヘッダーの画像をアップロードしたり、表示名を変更したりして、自分のプロフィールをカスタマイズすることができます。また、誰かからの新規フォローを許可する前にその人の様子を見ておきたい場合、アカウントを承認制にすることもできます。
       explanation: 始めるにあたってのアドバイスです
       final_action: 始めましょう
-      final_step: 'さあ、始めましょう！ たとえフォロワーがまだいなくても、あなたの公開した投稿はローカルタイムラインやハッシュタグなどを通じて誰かの目にとまるはずです。自己紹介をしたいときには #introductions ハッシュタグが便利かもしれません。'
+      final_step: 'さあ、始めましょう！ たとえフォロワーがまだいなくても、あなたの公開した投稿は連合タイムラインやハッシュタグなどを通じて誰かの目にとまるはずです。自己紹介をしたいときには #frfr ハッシュタグが便利かもしれません。'
       full_handle: あなたの正式なユーザーID
       full_handle_hint: 別のサーバーの友達とフォローやメッセージをやり取りする際には、これを伝えることになります。
       review_preferences_action: 設定の変更
       review_preferences_step: 受け取りたいメールの種類や投稿のデフォルト公開範囲など、ユーザー設定を必ず済ませておきましょう。目が回らない自信があるなら、アニメーション GIF を自動再生する設定もご検討ください。
       subject: Mastodon へようこそ
-      tip_federated_timeline: 連合タイムラインは Mastodon ネットワークの流れを見られるものです。ただしあなたと同じサーバーの人がフォローしている人だけが含まれるので、それが全てではありません。
-      tip_following: 最初は、サーバーの管理者をフォローした状態になっています。もっと興味のある人たちを見つけるには、ローカルタイムラインと連合タイムラインを確認してみましょう。
+      tip_federated_timeline: 連合タイムラインは Mastodon ネットワークの流れを見られるものです。ただしあなたと同じサーバーの人がフォローしている人や、リレーを経由して送られてくる投稿だけが含まれるので、それが全てではありません。
+      tip_following: 最初は、サーバーのインフォメーションアカウントをフォローした状態になっています。もっと興味のある人たちを見つけるには、#frfr ハッシュタグタイムラインと連合タイムラインを確認してみましょう。
       tip_local_timeline: ローカルタイムラインは %{instance} にいる人々の流れを見られるものです。彼らはあなたと同じサーバーにいる隣人のようなものです！
       tip_mobile_webapp: お使いのモバイル端末で、ブラウザから Mastodon をホーム画面に追加できますか？ もし追加できる場合、プッシュ通知の受け取りなど、まるで「普通の」アプリのような機能が楽しめます！
       tips: 豆知識

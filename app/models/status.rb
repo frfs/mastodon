@@ -237,6 +237,10 @@ class Status < ApplicationRecord
     @index_text ||= [spoiler_text, Formatter.instance.plaintext(self)].concat(media_attachments.map(&:description)).concat(preloadable_poll ? preloadable_poll.options : []).join("\n\n")
   end
 
+  def index_text
+    @index_text ||= [spoiler_text, Formatter.instance.plaintext(self)].concat(media_attachments.map(&:description)).concat(preloadable_poll ? preloadable_poll.options : []).join("\n\n")
+  end
+
   def mark_for_mass_destruction!
     @marked_for_mass_destruction = true
   end

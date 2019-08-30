@@ -1,9 +1,7 @@
  # frozen_string_literal: true
 
 class REST::KeywordSubscribeSerializer < ActiveModel::Serializer
-  attributes :id, :keyword, :ignorecase, :regexp
-
-  belongs_to :account, serializer: REST::AccountSerializer
+  attributes :id, :name, :keyword, :exclude_keyword, :ignorecase, :regexp, :ignore_block, :disabled, :exclude_home
 
   def id
     object.id.to_s

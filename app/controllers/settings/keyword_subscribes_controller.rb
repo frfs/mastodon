@@ -5,6 +5,7 @@ class Settings::KeywordSubscribesController < ApplicationController
 
   layout 'admin'
 
+  before_action :set_lists, only: [:index, :new, :edit, :update]
   before_action :set_keyword_subscribes, only: :index
   before_action :set_keyword_subscribe, only: [:edit, :update, :destroy]
   before_action :set_body_classes
@@ -18,7 +19,7 @@ class Settings::KeywordSubscribesController < ApplicationController
   end
 
   def create
-    @keyword_subscribe = current_account.keyword_subscribes.build(resource_params)
+    @keyword_subscribe = current_account.keyword_subscribes.build(keyword_subscribe_params)
 
     if @keyword_subscribe.save
       redirect_to settings_keyword_subscribes_path
@@ -30,7 +31,7 @@ class Settings::KeywordSubscribesController < ApplicationController
   def edit; end
 
   def update
-    if @keyword_subscribe.update(resource_params)
+    if @keyword_subscribe.update(keyword_subscribe_params)
       redirect_to settings_keyword_subscribes_path
     else
       render action: :edit
@@ -44,16 +45,31 @@ class Settings::KeywordSubscribesController < ApplicationController
 
   private
 
-  def set_keyword_subscribes
-    @keyword_subscribes = current_account.keyword_subscribes
-  end
-
   def set_keyword_subscribe
     @keyword_subscribe = current_account.keyword_subscribes.find(params[:id])
   end
 
+  def set_keyword_subscribes
+    @keyword_subscribes = current_account.keyword_subscribes.includes(:list).order('list_id NULLS FIRST', :name).reject(&:new_record?)
+  end
+
+  def set_lists
+    @lists = List.where(account: current_account).all
+  end
+
+  def keyword_subscribe_params
+    new_params = resource_params.permit!.to_h
+
+    if resource_params[:list_id] == '-1'
+      list = List.find_or_create_by!({ account: current_account, title: new_params[:name].presence || "keyword_#{Time.now.strftime('%Y%m%d%H%M%S')}" })
+      new_params.merge!({list_id: list.id})
+    end
+
+    new_params
+  end
+
   def resource_params
-    params.require(:keyword_subscribe).permit(:keyword, :ignorecase, :regexp)
+    params.require(:keyword_subscribe).permit(:name, :keyword, :exclude_keyword, :ignorecase, :regexp, :ignore_block, :disabled, :list_id)
   end
 
   def set_body_classes

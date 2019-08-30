@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 class Api::V1::FollowTagsController < Api::BaseController
-  before_action -> { doorkeeper_authorize! :read, :'read:follow_tags' }, only: [:index, :show]
-  before_action -> { doorkeeper_authorize! :write, :'write:follow_tags' }, except: [:index, :show]
+  before_action -> { doorkeeper_authorize! :read, :'read:follows' }, only: [:index, :show]
+  before_action -> { doorkeeper_authorize! :write, :'write:follows' }, except: [:index, :show]
 
   before_action :require_user!
   before_action :set_follow_tag, except: [:index, :create]

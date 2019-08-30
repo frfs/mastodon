@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 class Api::V1::AccountSubscribesController < Api::BaseController
-  before_action -> { doorkeeper_authorize! :read, :'read:account_subscribes' }, only: [:index, :show]
-  before_action -> { doorkeeper_authorize! :write, :'write:account_subscribes' }, except: [:index, :show]
+  before_action -> { doorkeeper_authorize! :read, :'read:follows' }, only: [:index, :show]
+  before_action -> { doorkeeper_authorize! :write, :'write:follows' }, except: [:index, :show]
 
   before_action :require_user!
   before_action :set_account_subscribe, except: [:index, :create]
