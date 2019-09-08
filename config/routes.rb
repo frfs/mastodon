@@ -385,6 +385,7 @@ Rails.application.routes.draw do
       end
 
       resources :favourite_tags, only: [:index, :create, :show, :update, :destroy]
+      resources :follow_tags, only: [:index, :create, :show, :update, :destroy]
       resources :account_subscribes, only: [:index, :create, :show, :update, :destroy]
       resources :keyword_subscribes, only: [:index, :create, :show, :update, :destroy]
 
