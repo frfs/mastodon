@@ -246,16 +246,21 @@ Rails.application.routes.draw do
       resource :two_factor_authentication, only: [:destroy]
     end
 
-    resources :custom_emojis, only: [:index, :new, :create, :update, :destroy] do
-      member do
-        post :copy
-        post :enable
-        post :disable
+    resources :custom_emojis, only: [:index, :new, :create] do
+      collection do
+        post :batch
       end
     end
 
     resources :account_moderation_notes, only: [:create, :destroy]
-    resources :tags, only: [:index, :show, :update]
+
+    resources :tags, only: [:index, :show, :update] do
+      collection do
+        post :approve_all
+        post :reject_all
+        post :batch
+      end
+    end
   end
 
   get '/admin', to: redirect('/admin/dashboard', status: 302)
@@ -388,6 +393,8 @@ Rails.application.routes.draw do
       resources :follow_tags, only: [:index, :create, :show, :update, :destroy]
       resources :account_subscribes, only: [:index, :create, :show, :update, :destroy]
       resources :keyword_subscribes, only: [:index, :create, :show, :update, :destroy]
+
+      resources :featured_tags, only: [:index, :create, :destroy]
 
       resources :polls, only: [:create, :show] do
         resources :votes, only: :create, controller: 'polls/votes'
