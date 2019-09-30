@@ -291,7 +291,7 @@ export function uploadCompose(files) {
             progress[i] = loaded;
             dispatch(uploadComposeProgress(progress.reduce((a, v) => a + v, 0), total));
           },
-        }).then(({ data }) => dispatch(uploadComposeSuccess(data)));
+        }).then(({ data }) => dispatch(uploadComposeSuccess(data, f)));
       }).catch(error => dispatch(uploadComposeFail(error)));
     };
   };
@@ -346,10 +346,11 @@ export function uploadComposeProgress(loaded, total) {
   };
 };
 
-export function uploadComposeSuccess(media) {
+export function uploadComposeSuccess(media, file) {
   return {
     type: COMPOSE_UPLOAD_SUCCESS,
     media: media,
+    file: file,
     skipLoading: true,
   };
 };
@@ -425,6 +426,7 @@ const fetchComposeSuggestionsTags = throttle((dispatch, getState, token) => {
       q: token.slice(1),
       resolve: false,
       limit: 4,
+      exclude_unreviewed: true,
     },
   }).then(({ data }) => {
     dispatch(readyComposeSuggestionsTags(token, data.hashtags));
