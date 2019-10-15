@@ -17,6 +17,8 @@ import {
   unreblog,
   pin,
   unpin,
+  fetchReblogs,
+  fetchFavourites,
 } from '../../actions/interactions';
 import {
   replyCompose,
@@ -46,6 +48,8 @@ import { boostModal, deleteModal } from '../../initial_state';
 import { attachFullscreenListener, detachFullscreenListener, isFullscreen } from '../ui/util/fullscreen';
 import { textForScreenReader, defaultMediaVisibility } from '../../components/status';
 import Icon from 'mastodon/components/icon';
+
+import AccountMiniContainer from '../../containers/account_mini_container';
 
 const messages = defineMessages({
   deleteConfirm: { id: 'confirmations.delete.confirm', defaultMessage: 'Delete' },
@@ -121,9 +125,15 @@ const makeMapStateToProps = () => {
     let ancestorsIds = Immutable.List();
     let descendantsIds = Immutable.List();
 
+    let rebloggedAccountIds = Immutable.List();
+    let favouritedAccountIds = Immutable.List();
+
     if (status) {
       ancestorsIds = getAncestorsIds(state, { id: status.get('in_reply_to_id') });
       descendantsIds = getDescendantsIds(state, { id: status.get('id') });
+
+      rebloggedAccountIds = state.getIn(['user_lists', 'reblogged_by', status.get('id')]);
+      favouritedAccountIds = state.getIn(['user_lists', 'favourited_by', status.get('id')]);
     }
 
     return {
@@ -132,6 +142,9 @@ const makeMapStateToProps = () => {
       descendantsIds,
       askReplyConfirmation: state.getIn(['compose', 'text']).trim().length !== 0,
       domain: state.getIn(['meta', 'domain']),
+
+      rebloggedAccountIds,
+      favouritedAccountIds,
     };
   };
 
@@ -156,6 +169,9 @@ class Status extends ImmutablePureComponent {
     askReplyConfirmation: PropTypes.bool,
     multiColumn: PropTypes.bool,
     domain: PropTypes.string.isRequired,
+
+    rebloggedAccountIds: ImmutablePropTypes.list,
+    favouritedAccountIds: ImmutablePropTypes.list,
   };
 
   state = {
@@ -166,6 +182,9 @@ class Status extends ImmutablePureComponent {
 
   componentWillMount () {
     this.props.dispatch(fetchStatus(this.props.params.statusId));
+
+    this.props.dispatch(fetchReblogs(this.props.params.statusId));
+    this.props.dispatch(fetchFavourites(this.props.params.statusId));
   }
 
   componentDidMount () {
@@ -439,6 +458,9 @@ class Status extends ImmutablePureComponent {
     const { shouldUpdateScroll, status, ancestorsIds, descendantsIds, intl, domain, multiColumn } = this.props;
     const { fullscreen } = this.state;
 
+    let rebloggedAccounts, favouritedAccounts;
+    const { rebloggedAccountIds, favouritedAccountIds } = this.props;
+
     if (status === null) {
       return (
         <Column>
@@ -454,6 +476,14 @@ class Status extends ImmutablePureComponent {
 
     if (descendantsIds && descendantsIds.size > 0) {
       descendants = <div>{this.renderChildren(descendantsIds)}</div>;
+    }
+
+    if (rebloggedAccountIds && rebloggedAccountIds.size > 0) {
+      rebloggedAccounts = (<AccountMiniContainer reblog accountIds={rebloggedAccountIds} />);
+    }
+
+    if (favouritedAccountIds && favouritedAccountIds.size > 0) {
+      favouritedAccounts = (<AccountMiniContainer reblog={false} accountIds={favouritedAccountIds} />);
     }
 
     const handlers = {
@@ -493,6 +523,9 @@ class Status extends ImmutablePureComponent {
                   showMedia={this.state.showMedia}
                   onToggleMediaVisibility={this.handleToggleMediaVisibility}
                 />
+
+                {rebloggedAccounts}
+                {favouritedAccounts}
 
                 <ActionBar
                   status={status}

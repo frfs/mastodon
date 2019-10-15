@@ -6498,3 +6498,32 @@ noscript {
     }
   }
 }
+
+.mini-avatars {
+  background: lighten($ui-base-color, 4%);
+  padding: 0 10px 14px 10px;
+  display: flex;
+
+  .title {
+    float: left;
+    margin-right: 6px;
+    min-width: 16px;
+    font-size: 14px;
+    vertical-align: middle;
+  }
+
+  .reblog {
+    color: $highlight-text-color;
+  }
+
+  .favourite {
+    color: $gold-star;
+  }
+
+  .avatars {
+    .account__avatar-wrapper {
+      float: left;
+      margin: 2px 0;
+    }
+  }
+}
