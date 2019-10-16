@@ -12,7 +12,6 @@ export default class AccountMini extends ImmutablePureComponent {
   static propTypes = {
     reblog: PropTypes.bool,
     accounts: ImmutablePropTypes.list.isRequired,
-    intl: PropTypes.object.isRequired,
   };
 
   render () {
