@@ -6503,26 +6503,32 @@ noscript {
   background: lighten($ui-base-color, 4%);
   padding: 0 10px 14px 10px;
   display: flex;
+  align-items: center;
 
   .title {
-    float: left;
-    margin-right: 6px;
+    display: inline-flex;
+    margin: 0 4px;
     min-width: 16px;
     font-size: 14px;
-    vertical-align: middle;
-  }
 
-  .reblog {
-    color: $highlight-text-color;
-  }
+    &.reblog {
+      color: $highlight-text-color;
+    }
 
-  .favourite {
-    color: $gold-star;
+    &.favourite {
+      color: $gold-star;
+    }
+
+    i {
+      margin: auto;
+    }
   }
 
   .avatars {
+    display: inline-flex;
+    flex-wrap: wrap;
+
     .account__avatar-wrapper {
-      float: left;
       margin: 2px 0;
     }
   }
