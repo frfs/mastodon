@@ -120,6 +120,20 @@ const makeMapStateToProps = () => {
     return Immutable.List(descendantsIds);
   });
 
+  const getRebloggedAccountIds = createSelector([
+    (_, { id }) => id,
+    state => state.getIn(['user_lists', 'reblogged_by']),
+  ], (statusId, rebloggedBy) => (
+    rebloggedBy.get(statusId) ? Immutable.List(rebloggedBy.get(statusId).reverse()) : Immutable.List()
+  ));
+
+  const getFavouritedAccountIds = createSelector([
+    (_, { id }) => id,
+    state => state.getIn(['user_lists', 'favourited_by']),
+  ], (statusId, favouritedBy) => (
+    favouritedBy.get(statusId) ? Immutable.List(favouritedBy.get(statusId).reverse()) : Immutable.List()
+  ));
+
   const mapStateToProps = (state, props) => {
     const status = getStatus(state, { id: props.params.statusId });
     let ancestorsIds = Immutable.List();
@@ -132,8 +146,8 @@ const makeMapStateToProps = () => {
       ancestorsIds = getAncestorsIds(state, { id: status.get('in_reply_to_id') });
       descendantsIds = getDescendantsIds(state, { id: status.get('id') });
 
-      rebloggedAccountIds = state.getIn(['user_lists', 'reblogged_by', status.get('id')]);
-      favouritedAccountIds = state.getIn(['user_lists', 'favourited_by', status.get('id')]);
+      rebloggedAccountIds = getRebloggedAccountIds(state, { id: status.get('id') });
+      favouritedAccountIds = getFavouritedAccountIds(state, { id: status.get('id') });
     }
 
     return {
