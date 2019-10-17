@@ -30,7 +30,7 @@ export default class AccountMini extends ImmutablePureComponent {
         to={`/accounts/${account.get('id')}`}
       >
         <div className='account__avatar-wrapper'>
-          <Avatar account={account} size={18} inline />
+          <Avatar account={account} size={24} inline />
         </div>
       </Permalink>
     ));
