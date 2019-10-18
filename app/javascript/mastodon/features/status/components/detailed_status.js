@@ -15,7 +15,15 @@ import scheduleIdleTask from '../../ui/util/schedule_idle_task';
 import classNames from 'classnames';
 import Icon from 'mastodon/components/icon';
 
-export default class DetailedStatus extends ImmutablePureComponent {
+import AccountMiniContainer from '../../../containers/account_mini_container';
+import { defineMessages, injectIntl } from 'react-intl';
+
+const messages = defineMessages({
+  more: { id: 'status.more', defaultMessage: 'More' },
+});
+
+export default @injectIntl
+class DetailedStatus extends ImmutablePureComponent {
 
   static contextTypes = {
     router: PropTypes.object,
@@ -32,6 +40,9 @@ export default class DetailedStatus extends ImmutablePureComponent {
     compact: PropTypes.bool,
     showMedia: PropTypes.bool,
     onToggleMediaVisibility: PropTypes.func,
+    intl: PropTypes.object.isRequired,
+    rebloggedAccountIds: ImmutablePropTypes.list,
+    favouritedAccountIds: ImmutablePropTypes.list,
   };
 
   state = {
@@ -91,7 +102,7 @@ export default class DetailedStatus extends ImmutablePureComponent {
   render () {
     const status = (this.props.status && this.props.status.get('reblog')) ? this.props.status.get('reblog') : this.props.status;
     const outerStyle = { boxSizing: 'border-box' };
-    const { compact } = this.props;
+    const { compact, intl, rebloggedAccountIds, favouritedAccountIds } = this.props;
 
     if (!status) {
       return null;
@@ -102,6 +113,8 @@ export default class DetailedStatus extends ImmutablePureComponent {
     let reblogLink = '';
     let reblogIcon = 'retweet';
     let favouriteLink = '';
+    let rebloggedAccounts = '';
+    let favouritedAccounts = '';
 
     if (this.props.measureHeight) {
       outerStyle.height = `${this.state.height}px`;
@@ -165,6 +178,12 @@ export default class DetailedStatus extends ImmutablePureComponent {
       reblogIcon = 'lock';
     }
 
+    if (rebloggedAccountIds && rebloggedAccountIds.size > 0) {
+      rebloggedAccounts = rebloggedAccountIds.map(id => (
+        <AccountMiniContainer reblog key={id} id={id} />
+      ));
+    }
+
     if (status.get('visibility') === 'private') {
       reblogLink = <Icon id={reblogIcon} />;
     } else if (this.context.router) {
@@ -174,6 +193,10 @@ export default class DetailedStatus extends ImmutablePureComponent {
           <span className='detailed-status__reblogs'>
             <FormattedNumber value={status.get('reblogs_count')} />
           </span>
+          <span className='mini-avatars'>{rebloggedAccounts}</span>
+          <div>
+            {rebloggedAccounts && rebloggedAccounts.size >= 40 && intl.formatMessage(messages.more)}
+          </div>
         </Link>
       );
     } else {
@@ -183,8 +206,18 @@ export default class DetailedStatus extends ImmutablePureComponent {
           <span className='detailed-status__reblogs'>
             <FormattedNumber value={status.get('reblogs_count')} />
           </span>
+          <span className='mini-avatars'>{rebloggedAccounts}</span>
+          <div>
+            {rebloggedAccounts && rebloggedAccounts.size >= 40 && intl.formatMessage(messages.more)}
+          </div>
         </a>
       );
+    }
+
+    if (favouritedAccountIds && favouritedAccountIds.size > 0) {
+      favouritedAccounts = favouritedAccountIds.map(id => (
+        <AccountMiniContainer reblog={false} key={id} id={id} />
+      ));
     }
 
     if (this.context.router) {
@@ -194,6 +227,10 @@ export default class DetailedStatus extends ImmutablePureComponent {
           <span className='detailed-status__favorites'>
             <FormattedNumber value={status.get('favourites_count')} />
           </span>
+          <span className='mini-avatars'>{favouritedAccounts}</span>
+          <div>
+            {favouritedAccounts && favouritedAccounts.size >= 40 && intl.formatMessage(messages.more)}
+          </div>
         </Link>
       );
     } else {
@@ -203,6 +240,10 @@ export default class DetailedStatus extends ImmutablePureComponent {
           <span className='detailed-status__favorites'>
             <FormattedNumber value={status.get('favourites_count')} />
           </span>
+          <span className='mini-avatars'>{favouritedAccounts}</span>
+          <div>
+            {favouritedAccounts && favouritedAccounts.size >= 40 && intl.formatMessage(messages.more)}
+          </div>
         </a>
       );
     }
@@ -222,7 +263,13 @@ export default class DetailedStatus extends ImmutablePureComponent {
           <div className='detailed-status__meta'>
             <a className='detailed-status__datetime' href={status.get('url')} target='_blank' rel='noopener'>
               <FormattedDate value={new Date(status.get('created_at'))} hour12={false} year='numeric' month='short' day='2-digit' hour='2-digit' minute='2-digit' />
-            </a>{applicationLink} · {reblogLink} · {favouriteLink}
+            </a>{applicationLink}
+          </div>
+          <div className='detailed-status__meta rebfavs'>
+            {reblogLink}
+          </div>
+          <div className='detailed-status__meta rebfavs'>
+            {favouriteLink}
           </div>
         </div>
       </div>

@@ -7,7 +7,7 @@ const makeMapStateToProps = () => {
   const getAccount = makeGetAccount();
 
   const mapStateToProps = (state, props) => ({
-    accounts: props.accountIds.map(id => getAccount(state, id)),
+    account: getAccount(state, props.id),
   });
 
   return mapStateToProps;
