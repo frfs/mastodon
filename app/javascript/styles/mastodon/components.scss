@@ -6499,37 +6499,37 @@ noscript {
   }
 }
 
-.mini-avatars {
+.rebfavs {
   background: lighten($ui-base-color, 4%);
-  padding: 0 10px 14px 10px;
-  display: flex;
-  align-items: center;
 
-  .title {
-    display: inline-flex;
-    margin: 0 4px;
-    min-width: 16px;
-    font-size: 14px;
-
-    &.reblog {
-      color: $highlight-text-color;
-    }
-
-    &.favourite {
-      color: $gold-star;
-    }
+  a {
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
 
     i {
-      margin: auto;
+      display: inline-flex;
+      min-width: 16px;
     }
-  }
 
-  .avatars {
-    display: inline-flex;
-    flex-wrap: wrap;
+    .detailed-status {
+      &__reblogs,&__favorites {
+        display: inline-flex;
+        margin: 0 4px;
+        min-width: 16px;
+        font-size: 14px;
+      }
+    }
 
-    .account__avatar-wrapper {
-      margin: 2px 0;
+    .mini-avatars {
+      display: inline-flex;
+      flex-wrap: wrap;
+      
+      .mini-avatar {
+        .account__avatar-wrapper {
+          margin: 2px 0;
+        }
+      }
     }
   }
 }

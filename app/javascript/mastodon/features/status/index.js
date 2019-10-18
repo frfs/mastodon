@@ -49,8 +49,6 @@ import { attachFullscreenListener, detachFullscreenListener, isFullscreen } from
 import { textForScreenReader, defaultMediaVisibility } from '../../components/status';
 import Icon from 'mastodon/components/icon';
 
-import AccountMiniContainer from '../../containers/account_mini_container';
-
 const messages = defineMessages({
   deleteConfirm: { id: 'confirmations.delete.confirm', defaultMessage: 'Delete' },
   deleteMessage: { id: 'confirmations.delete.message', defaultMessage: 'Are you sure you want to delete this status?' },
@@ -120,6 +118,20 @@ const makeMapStateToProps = () => {
     return Immutable.List(descendantsIds);
   });
 
+  const getRebloggedAccountIds = createSelector([
+    (_, { id }) => id,
+    state => state.getIn(['user_lists', 'reblogged_by']),
+  ], (statusId, rebloggedBy) => (
+    rebloggedBy.get(statusId) ? Immutable.List(rebloggedBy.get(statusId).reverse()) : Immutable.List()
+  ));
+
+  const getFavouritedAccountIds = createSelector([
+    (_, { id }) => id,
+    state => state.getIn(['user_lists', 'favourited_by']),
+  ], (statusId, favouritedBy) => (
+    favouritedBy.get(statusId) ? Immutable.List(favouritedBy.get(statusId).reverse()) : Immutable.List()
+  ));
+
   const mapStateToProps = (state, props) => {
     const status = getStatus(state, { id: props.params.statusId });
     let ancestorsIds = Immutable.List();
@@ -132,8 +144,8 @@ const makeMapStateToProps = () => {
       ancestorsIds = getAncestorsIds(state, { id: status.get('in_reply_to_id') });
       descendantsIds = getDescendantsIds(state, { id: status.get('id') });
 
-      rebloggedAccountIds = state.getIn(['user_lists', 'reblogged_by', status.get('id')]);
-      favouritedAccountIds = state.getIn(['user_lists', 'favourited_by', status.get('id')]);
+      rebloggedAccountIds = getRebloggedAccountIds(state, { id: status.get('id') });
+      favouritedAccountIds = getFavouritedAccountIds(state, { id: status.get('id') });
     }
 
     return {
@@ -458,7 +470,6 @@ class Status extends ImmutablePureComponent {
     const { shouldUpdateScroll, status, ancestorsIds, descendantsIds, intl, domain, multiColumn } = this.props;
     const { fullscreen } = this.state;
 
-    let rebloggedAccounts, favouritedAccounts;
     const { rebloggedAccountIds, favouritedAccountIds } = this.props;
 
     if (status === null) {
@@ -476,14 +487,6 @@ class Status extends ImmutablePureComponent {
 
     if (descendantsIds && descendantsIds.size > 0) {
       descendants = <div>{this.renderChildren(descendantsIds)}</div>;
-    }
-
-    if (rebloggedAccountIds && rebloggedAccountIds.size > 0) {
-      rebloggedAccounts = (<AccountMiniContainer reblog accountIds={rebloggedAccountIds} />);
-    }
-
-    if (favouritedAccountIds && favouritedAccountIds.size > 0) {
-      favouritedAccounts = (<AccountMiniContainer reblog={false} accountIds={favouritedAccountIds} />);
     }
 
     const handlers = {
@@ -522,10 +525,9 @@ class Status extends ImmutablePureComponent {
                   domain={domain}
                   showMedia={this.state.showMedia}
                   onToggleMediaVisibility={this.handleToggleMediaVisibility}
+                  rebloggedAccountIds={rebloggedAccountIds}
+                  favouritedAccountIds={favouritedAccountIds}
                 />
-
-                {rebloggedAccounts}
-                {favouritedAccounts}
 
                 <ActionBar
                   status={status}
