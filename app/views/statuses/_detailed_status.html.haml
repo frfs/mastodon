@@ -59,8 +59,8 @@
       - else
         = fa_icon('reply-all')
       %span.detailed-status__reblogs>= number_to_human status.replies_count, strip_insignificant_zeros: true
-      = " "
-    ·
+
+  .detailed-status__meta.rebfavs
     - if status.direct_visibility?
       %span.detailed-status__link<
         = fa_icon('envelope')
@@ -71,13 +71,18 @@
       = link_to remote_interaction_path(status, type: :reblog), class: 'modal-button detailed-status__link' do
         = fa_icon('retweet')
         %span.detailed-status__reblogs>= number_to_human status.reblogs_count, strip_insignificant_zeros: true
-        = " "
-    ·
+        %span.mini-avatars
+          - @reblogged_accounts.each do |account|
+            = mini_account account
+
+  .detailed-status__meta.rebfavs
     = link_to remote_interaction_path(status, type: :favourite), class: 'modal-button detailed-status__link' do
       = fa_icon('star')
       %span.detailed-status__favorites>= number_to_human status.favourites_count, strip_insignificant_zeros: true
-      = " "
+      %span.mini-avatars
+        - @favourited_accounts.each do |account|
+          = mini_account account
 
+  .detailed-status__meta
     - if user_signed_in?
-      ·
       = link_to t('statuses.open_in_web'), web_url("statuses/#{status.id}"), class: 'detailed-status__application', target: '_blank'

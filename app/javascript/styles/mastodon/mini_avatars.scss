@@ -1,0 +1,40 @@
+.rebfavs {
+  background: lighten($ui-base-color, 4%);
+
+  a {
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+
+    i {
+      display: inline-flex;
+      min-width: 16px;
+    }
+
+    .detailed-status {
+      &__reblogs,&__favorites {
+        display: inline-flex;
+        margin: 0 4px;
+        min-width: 16px;
+        font-size: 14px;
+      }
+    }
+
+    .mini-avatars {
+      display: inline-flex;
+      flex-wrap: wrap;
+
+      .mini-avatar {
+        .account__avatar-wrapper {
+          margin: 2px 0;
+        }
+      }
+    }
+  }
+}
+
+.public-layout {
+  .detailed-status__meta.rebfavs {
+    margin-top: 15px;
+  }
+}
