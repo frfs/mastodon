@@ -6,6 +6,7 @@ module StatusControllerConcern
   ANCESTORS_LIMIT         = 40
   DESCENDANTS_LIMIT       = 60
   DESCENDANTS_DEPTH_LIMIT = 20
+  REBFAV_ACCOUNTS_LIMIT  = 400
 
   def create_descendant_thread(starting_depth, statuses)
     depth = starting_depth + statuses.size
@@ -83,5 +84,28 @@ module StatusControllerConcern
     end
 
     @max_descendant_thread_id = @descendant_threads.pop[:statuses].first.id if descendants.size >= DESCENDANTS_LIMIT
+  end
+
+  def set_reblogged_accounts
+    @reblogged_accounts = Account
+      .includes(:statuses, :account_stat)
+      .references(:statuses)
+      .merge(Status
+          .where(reblog_of_id: @status.id)
+          .where(visibility: [:public, :unlisted])
+          .order(created_at: :desc)
+          .limit(REBFAV_ACCOUNTS_LIMIT))
+      .reverse
+  end
+
+  def set_favourited_accounts
+    @favourited_accounts = Account
+      .includes(:favourites, :account_stat)
+      .references(:favourites)
+      .where(favourites: { status_id: @status.id })
+      .merge(Favourite
+        .order(created_at: :desc)
+        .limit(REBFAV_ACCOUNTS_LIMIT))
+      .reverse
   end
 end

@@ -31,6 +31,8 @@ class StatusesController < ApplicationController
         expires_in 10.seconds, public: true if current_account.nil?
         set_ancestors
         set_descendants
+        set_reblogged_accounts
+        set_favourited_accounts
       end
 
       format.json do
