@@ -5,6 +5,7 @@ class StatusesController < ApplicationController
   include SignatureAuthentication
   include Authorization
   include AccountOwnedConcern
+  include RebfavConcern
 
   layout 'public'
 
