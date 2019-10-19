@@ -3,7 +3,7 @@
 module RebfavConcern
   extend ActiveSupport::Concern
 
-  REBFAV_ACCOUNTS_LIMIT  = 400
+  REBFAV_ACCOUNTS_LIMIT = 400
 
   def set_reblogged_accounts
     @reblogged_accounts = Account
