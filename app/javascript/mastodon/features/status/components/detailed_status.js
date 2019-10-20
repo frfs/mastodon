@@ -181,9 +181,11 @@ class DetailedStatus extends ImmutablePureComponent {
     }
 
     if (rebloggedAccountIds && rebloggedAccountIds.size > 0) {
-      rebloggedAccounts = rebloggedAccountIds.map(id => (
-        <div key={id} className='mini-avatars'><AccountMiniContainer reblog id={id} /></div>
-      ));
+      rebloggedAccounts = (
+        <div className='mini-avatars'>
+          {rebloggedAccountIds.map(id => (<AccountMiniContainer key={id} reblog id={id} />))}
+        </div>
+      );
       if (rebloggedAccountIds.size >= 40) {
         rebloggedAccountsMore = (
           <Link to={`/statuses/${status.get('id')}/reblogs`} className='detailed-status__link'>
@@ -216,10 +218,12 @@ class DetailedStatus extends ImmutablePureComponent {
     }
 
     if (favouritedAccountIds && favouritedAccountIds.size > 0) {
-      favouritedAccounts = favouritedAccountIds.map(id => (
-        <div key={id} className='mini-avatars'><AccountMiniContainer reblog={false} id={id} /></div>
-      ));
-      if (favouritedAccountIds.size >= 40) {
+      favouritedAccounts = (
+        <div className='mini-avatars'>
+          {favouritedAccountIds.map(id => (<AccountMiniContainer key={id} reblog={false} id={id} />))}
+        </div>
+      );
+      if (favouritedAccountIds.size >= 4) {
         favouritedAccountsMore = (
           <Link to={`/statuses/${status.get('id')}/favourites`} className='detailed-status__link'>
             <div>{intl.formatMessage(messages.more)}</div>
