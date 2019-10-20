@@ -64,7 +64,7 @@ class ComposeForm extends ImmutablePureComponent {
     anyMedia: PropTypes.bool,
     singleColumn: PropTypes.bool,
     onChangeSwipeableThreshold: PropTypes.func.isRequired,
-    swipeableThreshold: PropTypes.number,
+    swipeableThreshold: PropTypes.string,
   };
 
   static defaultProps = {
@@ -135,8 +135,8 @@ class ComposeForm extends ImmutablePureComponent {
   }
 
   handleChangeSwipeableThreshold = () => {
-    const swipeableThreshold = parseInt(window.prompt('Input threshold (NOTE: This value is NOT saved, restored to the default value 5 at the next load). See "About threshold" for details.', this.props.swipeableThreshold || 5));
-    if (swipeableThreshold) this.props.onChangeSwipeableThreshold(swipeableThreshold);
+    const swipeableThreshold = window.prompt('Input threshold (NOTE: This value is NOT saved, restored to the default value 5 at the next load). See "About threshold" for details.', this.props.swipeableThreshold || '5');
+    if (swipeableThreshold && parseInt(swipeableThreshold)) this.props.onChangeSwipeableThreshold(parseInt(swipeableThreshold));
   }
 
   componentDidUpdate (prevProps) {

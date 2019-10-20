@@ -415,7 +415,7 @@ export default function compose(state = initialState, action) {
   case COMPOSE_POLL_SETTINGS_CHANGE:
     return state.update('poll', poll => poll.set('expires_in', action.expiresIn).set('multiple', action.isMultiple));
   case CHANGE_SWIPEABLE_THRESHOLD:
-    return state.set('swipeableThreshold', action.swipeableThreshold);
+    return state.set('swipeable_threshold', action.swipeableThreshold);
   default:
     return state;
   }
