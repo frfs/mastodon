@@ -115,6 +115,8 @@ class DetailedStatus extends ImmutablePureComponent {
     let favouriteLink = '';
     let rebloggedAccounts = '';
     let favouritedAccounts = '';
+    let rebloggedAccountsMore = '';
+    let favouritedAccountsMore = '';
 
     if (this.props.measureHeight) {
       outerStyle.height = `${this.state.height}px`;
@@ -180,8 +182,15 @@ class DetailedStatus extends ImmutablePureComponent {
 
     if (rebloggedAccountIds && rebloggedAccountIds.size > 0) {
       rebloggedAccounts = rebloggedAccountIds.map(id => (
-        <AccountMiniContainer reblog key={id} id={id} />
+        <div key={id} className='mini-avatars'><AccountMiniContainer reblog id={id} /></div>
       ));
+      if (rebloggedAccountIds.size >= 40) {
+        rebloggedAccountsMore = (
+          <Link to={`/statuses/${status.get('id')}/reblogs`} className='detailed-status__link'>
+            <div>{intl.formatMessage(messages.more)}</div>
+          </Link>
+        );
+      }
     }
 
     if (status.get('visibility') === 'private') {
@@ -193,10 +202,6 @@ class DetailedStatus extends ImmutablePureComponent {
           <span className='detailed-status__reblogs'>
             <FormattedNumber value={status.get('reblogs_count')} />
           </span>
-          <span className='mini-avatars'>{rebloggedAccounts}</span>
-          <div>
-            {rebloggedAccounts && rebloggedAccounts.size >= 40 && intl.formatMessage(messages.more)}
-          </div>
         </Link>
       );
     } else {
@@ -206,18 +211,21 @@ class DetailedStatus extends ImmutablePureComponent {
           <span className='detailed-status__reblogs'>
             <FormattedNumber value={status.get('reblogs_count')} />
           </span>
-          <span className='mini-avatars'>{rebloggedAccounts}</span>
-          <div>
-            {rebloggedAccounts && rebloggedAccounts.size >= 40 && intl.formatMessage(messages.more)}
-          </div>
         </a>
       );
     }
 
     if (favouritedAccountIds && favouritedAccountIds.size > 0) {
       favouritedAccounts = favouritedAccountIds.map(id => (
-        <AccountMiniContainer reblog={false} key={id} id={id} />
+        <div key={id} className='mini-avatars'><AccountMiniContainer reblog={false} id={id} /></div>
       ));
+      if (favouritedAccountIds.size >= 40) {
+        favouritedAccountsMore = (
+          <Link to={`/statuses/${status.get('id')}/favourites`} className='detailed-status__link'>
+            <div>{intl.formatMessage(messages.more)}</div>
+          </Link>
+        );
+      }
     }
 
     if (this.context.router) {
@@ -227,10 +235,6 @@ class DetailedStatus extends ImmutablePureComponent {
           <span className='detailed-status__favorites'>
             <FormattedNumber value={status.get('favourites_count')} />
           </span>
-          <span className='mini-avatars'>{favouritedAccounts}</span>
-          <div>
-            {favouritedAccounts && favouritedAccounts.size >= 40 && intl.formatMessage(messages.more)}
-          </div>
         </Link>
       );
     } else {
@@ -240,10 +244,6 @@ class DetailedStatus extends ImmutablePureComponent {
           <span className='detailed-status__favorites'>
             <FormattedNumber value={status.get('favourites_count')} />
           </span>
-          <span className='mini-avatars'>{favouritedAccounts}</span>
-          <div>
-            {favouritedAccounts && favouritedAccounts.size >= 40 && intl.formatMessage(messages.more)}
-          </div>
         </a>
       );
     }
@@ -267,9 +267,13 @@ class DetailedStatus extends ImmutablePureComponent {
           </div>
           <div className='detailed-status__meta rebfavs'>
             {reblogLink}
+            {rebloggedAccounts}
+            {rebloggedAccountsMore}
           </div>
           <div className='detailed-status__meta rebfavs'>
             {favouriteLink}
+            {favouritedAccounts}
+            {favouritedAccountsMore}
           </div>
         </div>
       </div>
