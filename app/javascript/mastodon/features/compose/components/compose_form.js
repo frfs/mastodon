@@ -63,8 +63,6 @@ class ComposeForm extends ImmutablePureComponent {
     showSearch: PropTypes.bool,
     anyMedia: PropTypes.bool,
     singleColumn: PropTypes.bool,
-    onChangeSwipeableThreshold: PropTypes.func.isRequired,
-    swipeableThreshold: PropTypes.number,
   };
 
   static defaultProps = {
@@ -132,11 +130,6 @@ class ComposeForm extends ImmutablePureComponent {
         this.composeForm.scrollIntoView();
       }
     }
-  }
-
-  handleChangeSwipeableThreshold = () => {
-    const swipeableThreshold = parseInt(window.prompt('Input threshold (NOTE: This value is NOT saved, restored to the default value 5 at the next load). See "About threshold" for details.', this.props.swipeableThreshold || 5));
-    if (swipeableThreshold) this.props.onChangeSwipeableThreshold(swipeableThreshold);
   }
 
   componentDidUpdate (prevProps) {
@@ -275,9 +268,6 @@ class ComposeForm extends ImmutablePureComponent {
 
           <div className='compose-form__publish-button-wrapper'><Button text={publishText} onClick={this.handleSubmit} disabled={disabledButton} block /></div>
         </div>
-
-        <Button onClick={this.handleChangeSwipeableThreshold} style={{ margin: '40px 0' }} block secondary>change swipeable threshold</Button>
-        <span className='getting-started__footer'><a href='https://react-swipeable-views.com/api/api/#swipeableviews' target='_blank'>About threshold</a></span>
       </div>
     );
   }
