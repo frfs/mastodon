@@ -63,7 +63,6 @@ class ColumnsArea extends ImmutablePureComponent {
     isModalOpen: PropTypes.bool.isRequired,
     singleColumn: PropTypes.bool,
     children: PropTypes.node,
-    swipeableThreshold: PropTypes.number,
   };
 
   state = {
@@ -177,15 +176,13 @@ class ColumnsArea extends ImmutablePureComponent {
     const { columns, children, singleColumn, isModalOpen, intl } = this.props;
     const { shouldAnimate } = this.state;
 
-    const { swipeableThreshold } = this.props.swipeableThreshold ? this.props.swipeableThreshold : 5;
-
     const columnIndex = getIndex(this.context.router.history.location.pathname);
 
     if (singleColumn) {
       const floatingActionButton = shouldHideFAB(this.context.router.history.location.pathname) ? null : <Link key='floating-action-button' to='/statuses/new' className='floating-action-button' aria-label={intl.formatMessage(messages.publish)}><Icon id='pencil' /></Link>;
 
       const content = columnIndex !== -1 ? (
-        <ReactSwipeableViews key='content' index={columnIndex} onChangeIndex={this.handleSwipe} onTransitionEnd={this.handleAnimationEnd} animateTransitions={shouldAnimate} springConfig={{ duration: '400ms', delay: '0s', easeFunction: 'ease' }} style={{ height: '100%' }} threshold={swipeableThreshold}>
+        <ReactSwipeableViews key='content' index={columnIndex} onChangeIndex={this.handleSwipe} onTransitionEnd={this.handleAnimationEnd} animateTransitions={shouldAnimate} springConfig={{ duration: '400ms', delay: '0s', easeFunction: 'ease' }} style={{ height: '100%' }} disabled>
           {links.map(this.renderView)}
         </ReactSwipeableViews>
       ) : (

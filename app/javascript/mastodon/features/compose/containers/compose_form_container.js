@@ -9,7 +9,6 @@ import {
   changeComposeSpoilerText,
   insertEmojiCompose,
   uploadCompose,
-  changeSwipeableThreshold,
 } from '../../../actions/compose';
 
 const mapStateToProps = state => ({
@@ -26,7 +25,6 @@ const mapStateToProps = state => ({
   isUploading: state.getIn(['compose', 'is_uploading']),
   showSearch: state.getIn(['search', 'submitted']) && !state.getIn(['search', 'hidden']),
   anyMedia: state.getIn(['compose', 'media_attachments']).size > 0,
-  swipeableThreshold: state.get('swipeableThreshold'),
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -63,9 +61,6 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(insertEmojiCompose(position, data, needsSpace));
   },
 
-  onChangeSwipeableThreshold(swipeableThreshold) {
-    dispatch(changeSwipeableThreshold(swipeableThreshold));
-  },
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ComposeForm);
