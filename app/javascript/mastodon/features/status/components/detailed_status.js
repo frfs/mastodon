@@ -223,7 +223,7 @@ class DetailedStatus extends ImmutablePureComponent {
           {favouritedAccountIds.map(id => (<AccountMiniContainer key={id} reblog={false} id={id} />))}
         </div>
       );
-      if (favouritedAccountIds.size >= 4) {
+      if (favouritedAccountIds.size >= 40) {
         favouritedAccountsMore = (
           <Link to={`/statuses/${status.get('id')}/favourites`} className='detailed-status__link'>
             <div>{intl.formatMessage(messages.more)}</div>
