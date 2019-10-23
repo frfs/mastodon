@@ -207,6 +207,9 @@ class Status extends ImmutablePureComponent {
     if (nextProps.params.statusId !== this.props.params.statusId && nextProps.params.statusId) {
       this._scrolledIntoView = false;
       this.props.dispatch(fetchStatus(nextProps.params.statusId));
+
+      this.props.dispatch(fetchReblogs(nextProps.params.statusId));
+      this.props.dispatch(fetchFavourites(nextProps.params.statusId));
     }
 
     if (nextProps.status && nextProps.status.get('id') !== this.state.loadedStatusId) {
