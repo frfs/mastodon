@@ -402,6 +402,7 @@ Rails.application.routes.draw do
       end
 
       resources :featured_tags, only: [:index, :create, :destroy]
+      resources :favourite_tags, only: [:index, :create, :show, :update, :destroy]
       resources :follow_tags, only: [:index, :create, :show, :update, :destroy]
       resources :account_subscribes, only: [:index, :create, :show, :update, :destroy]
       resources :domain_subscribes, only: [:index, :create, :show, :update, :destroy]
