@@ -23,6 +23,7 @@ const messages = defineMessages({
   cancel_reblog_private: { id: 'status.cancel_reblog_private', defaultMessage: 'Unboost' },
   cannot_reblog: { id: 'status.cannot_reblog', defaultMessage: 'This post cannot be boosted' },
   favourite: { id: 'status.favourite', defaultMessage: 'Favourite' },
+  bookmark: { id: 'status.bookmark', defaultMessage: 'Bookmark' },
   open: { id: 'status.open', defaultMessage: 'Expand this status' },
   report: { id: 'status.report', defaultMessage: 'Report @{name}' },
   muteConversation: { id: 'status.mute_conversation', defaultMessage: 'Mute conversation' },
@@ -66,6 +67,7 @@ class StatusActionBar extends ImmutablePureComponent {
     onEmbed: PropTypes.func,
     onMuteConversation: PropTypes.func,
     onPin: PropTypes.func,
+    onBookmark: PropTypes.func,
     withDismiss: PropTypes.bool,
     intl: PropTypes.object.isRequired,
   };
@@ -112,6 +114,10 @@ class StatusActionBar extends ImmutablePureComponent {
 
   _openInteractionDialog = type => {
     window.open(`/interact/${this.props.status.get('id')}?type=${type}`, 'mastodon-intent', 'width=445,height=600,resizable=no,menubar=no,status=no,scrollbars=yes');
+  }
+
+  handleBookmarkClick = () => {
+    this.props.onBookmark(this.props.status);
   }
 
   handleDeleteClick = () => {
@@ -260,6 +266,7 @@ class StatusActionBar extends ImmutablePureComponent {
           <span className='status__action-bar__counter__label'><FormattedNumber value={status.get('favourites_count')} /></span>
         </div>
         {shareButton}
+        <IconButton className='status__action-bar-button bookmark-icon' disabled={anonymousAccess} active={status.get('bookmarked')} pressed={status.get('bookmarked')} title={intl.formatMessage(messages.bookmark)} icon='bookmark' onClick={this.handleBookmarkClick} />
 
         <div className='status__action-bar-dropdown'>
           <DropdownMenuContainer disabled={anonymousAccess} status={status} items={menu} icon='ellipsis-h' size={18} direction='right' title={intl.formatMessage(messages.more)} />
