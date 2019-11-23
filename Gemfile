@@ -15,7 +15,7 @@ gem 'makara', '~> 0.4'
 gem 'pghero', '~> 2.3'
 gem 'dotenv-rails', '~> 2.7'
 
-gem 'aws-sdk-s3', '~> 1.52', require: false
+gem 'aws-sdk-s3', '~> 1.55', require: false
 gem 'fog-core', '<= 2.1.0'
 gem 'fog-openstack', '~> 0.3', require: false
 gem 'paperclip', '~> 6.0'
@@ -71,7 +71,7 @@ gem 'parallel', '~> 1.18'
 gem 'posix-spawn', git: 'https://github.com/rtomayko/posix-spawn', ref: '58465d2e213991f8afb13b984854a49fcdcc980c'
 gem 'pundit', '~> 2.1'
 gem 'premailer-rails'
-gem 'rack-attack', '~> 6.1'
+gem 'rack-attack', '~> 6.2'
 gem 'rack-cors', '~> 1.0', require: 'rack/cors'
 gem 'rails-i18n', '~> 5.1'
 gem 'rails-settings-cached', '~> 0.6'
@@ -95,7 +95,7 @@ gem 'tty-command', '~> 0.9', require: false
 gem 'tty-prompt', '~> 0.19', require: false
 gem 'twitter-text', '~> 1.14'
 gem 'tzinfo-data', '~> 1.2019'
-gem 'webpacker', '~> 4.0'
+gem 'webpacker', '~> 4.2'
 gem 'webpush'
 
 gem 'json-ld', git: 'https://github.com/ruby-rdf/json-ld.git', ref: 'e742697a0906e74e8bb777ef98137bc3955d981d'
