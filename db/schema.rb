@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_10_31_163205) do
+ActiveRecord::Schema.define(version: 2019_12_14_025518) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -98,6 +98,7 @@ ActiveRecord::Schema.define(version: 2019_10_31_163205) do
     t.datetime "updated_at", null: false
     t.datetime "last_status_at"
     t.integer "lock_version", default: 0, null: false
+    t.bigint "subscribing_count", default: 0, null: false
     t.index ["account_id"], name: "index_account_stats_on_account_id", unique: true
   end
 
