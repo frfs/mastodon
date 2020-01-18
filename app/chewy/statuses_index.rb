@@ -3,20 +3,25 @@
 class StatusesIndex < Chewy::Index
   settings index: { refresh_interval: '15m' }, analysis: {
     tokenizer: {
-      kuromoji_user_dict: {
-        type: 'kuromoji_tokenizer',
+      sudachi_tokenizer: {
+        type: 'sudachi_tokenizer',
+        mode: 'search',
+        discard_punctuation: true,
+        resources_path: '/usr/share/elasticsearch/config/sudachi',
+        #settings_path: '/etc/elasticsearch/sudachi.json',
       },
     },
     analyzer: {
       content: {
-        type: 'custom',
-        tokenizer: 'kuromoji_user_dict',
         filter: %w(
-          kuromoji_baseform
-          kuromoji_stemmer
-          cjk_width
           lowercase
+          cjk_width
+          sudachi_part_of_speech
+          sudachi_ja_stop
+          sudachi_baseform
         ),
+        tokenizer: 'sudachi_tokenizer',
+        type: 'custom',
       },
     },
   }
@@ -41,7 +46,7 @@ class StatusesIndex < Chewy::Index
       field :id, type: 'long'
       field :account_id, type: 'long'
 
-      field :text, type: 'text', value: ->(status) { status.index_text } do
+      field :text, type: 'text', value: ->(status) { [status.spoiler_text, Formatter.instance.plaintext(status)].concat(status.media_attachments.map(&:description)).concat(status.preloadable_poll ? status.preloadable_poll.options : []).join("\n\n") } do
         field :stemmed, type: 'text', analyzer: 'content'
       end
 
