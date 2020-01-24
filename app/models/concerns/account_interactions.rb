@@ -95,6 +95,8 @@ module AccountInteractions
 
     has_many :subscribing, through: :active_subscribes,  source: :target_account
     has_many :subscribers, through: :passive_subscribes, source: :account
+
+    has_many :announcement_mutes, dependent: :destroy
   end
 
   def follow!(other_account, reblogs: nil, uri: nil)
