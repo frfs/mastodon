@@ -265,7 +265,7 @@ class ReactionsBar extends ImmutablePureComponent {
           />
         ))}
 
-        {visibleReactions.size < 8 && <EmojiPickerDropdown onPickEmoji={this.handleEmojiPick} button={<Icon id='plus' />} />}
+        <EmojiPickerDropdown onPickEmoji={this.handleEmojiPick} button={<Icon id='plus' />} />
       </div>
     );
   }
