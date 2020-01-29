@@ -41,7 +41,7 @@
   cursor: pointer;
   display: inline-block;
   font-family: inherit;
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 500;
   height: 36px;
   letter-spacing: 0;
@@ -50,6 +50,7 @@
   padding: 0 16px;
   position: relative;
   text-align: center;
+  text-transform: uppercase;
   text-decoration: none;
   text-overflow: ellipsis;
   transition: all 100ms ease-in;
@@ -887,7 +888,7 @@
   }
 
   a {
-    color: $highlight-text-color;
+    color: $secondary-text-color;
     text-decoration: none;
 
     &:hover {
@@ -902,6 +903,10 @@
           text-decoration: underline;
         }
       }
+    }
+
+    &.unhandled-link {
+      color: lighten($ui-highlight-color, 8%);
     }
   }
 }
@@ -933,8 +938,9 @@
   border: 0;
   color: $inverted-text-color;
   font-weight: 700;
-  font-size: 12px;
+  font-size: 11px;
   padding: 0 6px;
+  text-transform: uppercase;
   line-height: 20px;
   cursor: pointer;
   vertical-align: middle;
@@ -1457,7 +1463,8 @@ a .account__avatar {
 
   & > span {
     display: block;
-    font-size: 12px;
+    text-transform: uppercase;
+    font-size: 11px;
     color: $darker-text-color;
   }
 
@@ -2805,8 +2812,9 @@ a.account__display-name {
   background: $ui-base-color;
   color: $dark-text-color;
   padding: 8px 20px;
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 500;
+  text-transform: uppercase;
   cursor: default;
 }
 
@@ -2871,7 +2879,8 @@ a.account__display-name {
     margin-top: 10px;
 
     h4 {
-      font-size: 13px;
+      font-size: 12px;
+      text-transform: uppercase;
       color: $darker-text-color;
       padding: 10px;
       font-weight: 500;
@@ -3401,8 +3410,9 @@ a.status-card.compact:hover {
 
 .loading-indicator {
   color: $dark-text-color;
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 400;
+  text-transform: uppercase;
   overflow: visible;
   position: absolute;
   top: 50%;
@@ -3766,7 +3776,8 @@ a.status-card.compact:hover {
   display: block;
   vertical-align: top;
   background-color: $base-overlay-background;
-  font-size: 12px;
+  text-transform: uppercase;
+  font-size: 11px;
   font-weight: 500;
   padding: 4px;
   border-radius: 4px;
@@ -4018,7 +4029,8 @@ a.status-card.compact:hover {
   }
 
   span {
-    font-size: 13px;
+    font-size: 12px;
+    text-transform: uppercase;
     font-weight: 500;
     display: block;
   }
@@ -4617,7 +4629,8 @@ a.status-card.compact:hover {
     font-weight: 500;
     color: $inverted-text-color;
     margin-bottom: 5px;
-    font-size: 13px;
+    text-transform: uppercase;
+    font-size: 12px;
   }
 
   &__case {
@@ -5749,8 +5762,8 @@ a.status-card.compact:hover {
     text-align: center;
     text-decoration: none;
     position: relative;
-    overflow: hidden;
     width: 100%;
+    white-space: nowrap;
 
     &.active {
       color: $secondary-text-color;
