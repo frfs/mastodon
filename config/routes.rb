@@ -199,6 +199,7 @@ Rails.application.routes.draw do
     end
 
     resource :settings, only: [:edit, :update]
+    resources :site_uploads, only: [:destroy]
 
     resources :invites, only: [:index, :create, :destroy] do
       collection do
@@ -355,7 +356,7 @@ Rails.application.routes.draw do
         end
       end
 
-      resources :media,        only: [:create, :update]
+      resources :media,        only: [:create, :update, :show]
       resources :blocks,       only: [:index]
       resources :mutes,        only: [:index]
       resources :favourites,   only: [:index]
@@ -474,6 +475,7 @@ Rails.application.routes.draw do
     end
 
     namespace :v2 do
+      resources :media, only: [:create]
       get '/search', to: 'search#index', as: :search
     end
 
