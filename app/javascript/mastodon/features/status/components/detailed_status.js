@@ -196,7 +196,7 @@ class DetailedStatus extends ImmutablePureComponent {
       }
     }
 
-    if (status.get('visibility') === 'private') {
+    if (['private', 'direct'].includes(status.get('visibility'))) {
       reblogLink = <Icon id={reblogIcon} />;
     } else if (this.context.router) {
       reblogLink = (
