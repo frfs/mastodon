@@ -140,7 +140,7 @@ const resizeImage = (img, type = 'image/png') => new Promise((resolve, reject) =
 
 const WITHOUT_RESIZING_FORMATS = ['image/gif', 'image/heic', 'image/heif'];
 
-export default inputFile => new Promise((resolve, reject) => {
+export default inputFile => new Promise((resolve) => {
   if (!inputFile.type.match(/image.*/) || WITHOUT_RESIZING_FORMATS.indexOf(inputFile.type) >= 0) {
     resolve(inputFile);
     return;
@@ -155,5 +155,5 @@ export default inputFile => new Promise((resolve, reject) => {
     resizeImage(img, inputFile.type)
       .then(resolve)
       .catch(() => resolve(inputFile));
-  }).catch(reject);
+  }).catch(() => resolve(inputFile));
 });
