@@ -44,7 +44,7 @@ class Api::V1::Timelines::PublicController < Api::BaseController
     elsif params[:domain].present?
       Status.as_domain_timeline(current_account, params[:domain])
     else
-      Status.as_public_timeline(current_account, false)
+      Status.as_public_timeline(current_account, truthy_param?(:remote) ? :remote : truthy_param?(:local))
     end
   end
 
@@ -53,7 +53,7 @@ class Api::V1::Timelines::PublicController < Api::BaseController
   end
 
   def pagination_params(core_params)
-    params.slice(:local, :limit, :only_media).permit(:local, :limit, :only_media).merge(core_params)
+    params.slice(:local, :remote, :limit, :only_media).permit(:local, :remote, :limit, :only_media).merge(core_params)
   end
 
   def next_path
