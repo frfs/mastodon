@@ -36,6 +36,7 @@ import trends from './trends';
 import missed_updates from './missed_updates';
 import favourite_tags from './favourite_tags';
 import announcements from './announcements';
+import markers from './markers';
 
 const reducers = {
   announcements,
@@ -75,6 +76,7 @@ const reducers = {
   trends,
   missed_updates,
   favourite_tags,
+  markers,
 };
 
 export default combineReducers(reducers);
