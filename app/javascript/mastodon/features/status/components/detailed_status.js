@@ -132,6 +132,7 @@ class DetailedStatus extends ImmutablePureComponent {
             src={attachment.get('url')}
             alt={attachment.get('description')}
             duration={attachment.getIn(['meta', 'original', 'duration'], 0)}
+            poster={status.getIn(['account', 'avatar_static'])}
             height={110}
             preload
           />
