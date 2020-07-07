@@ -237,9 +237,6 @@ class StatusActionBar extends ImmutablePureComponent {
     const account            = status.get('account');
 
     let menu = [];
-    let reblogIcon = 'retweet';
-    let replyIcon;
-    let replyTitle;
 
     menu.push({ text: intl.formatMessage(messages.open), action: this.handleOpen });
 
@@ -259,10 +256,6 @@ class StatusActionBar extends ImmutablePureComponent {
     if (status.getIn(['account', 'id']) === me) {
       if (publicStatus) {
         menu.push({ text: intl.formatMessage(status.get('pinned') ? messages.unpin : messages.pin), action: this.handlePinClick });
-      } else {
-        if (status.get('visibility') === 'private') {
-          menu.push({ text: intl.formatMessage(status.get('reblogged') ? messages.cancel_reblog_private : messages.reblog_private), action: this.handleReblogClick });
-        }
       }
 
       menu.push({ text: intl.formatMessage(messages.delete), action: this.handleDeleteClick });
@@ -305,18 +298,27 @@ class StatusActionBar extends ImmutablePureComponent {
       }
     }
 
-    if (status.get('visibility') === 'direct') {
-      reblogIcon = 'envelope';
-    } else if (status.get('visibility') === 'private') {
-      reblogIcon = 'lock';
-    }
-
+    let replyIcon;
+    let replyTitle;
     if (status.get('in_reply_to_id', null) === null) {
       replyIcon = 'reply';
       replyTitle = intl.formatMessage(messages.reply);
     } else {
       replyIcon = 'reply-all';
       replyTitle = intl.formatMessage(messages.replyAll);
+    }
+
+    const reblogPrivate = status.getIn(['account', 'id']) === me && status.get('visibility') === 'private';
+
+    let reblogTitle = '';
+    if (status.get('reblogged')) {
+      reblogTitle = intl.formatMessage(messages.cancel_reblog_private);
+    } else if (publicStatus) {
+      reblogTitle = intl.formatMessage(messages.reblog);
+    } else if (reblogPrivate) {
+      reblogTitle = intl.formatMessage(messages.reblog_private);
+    } else {
+      reblogTitle = intl.formatMessage(messages.cannot_reblog);
     }
 
     const shareButton = ('share' in navigator) && publicStatus && (
