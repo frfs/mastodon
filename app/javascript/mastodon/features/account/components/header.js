@@ -11,7 +11,6 @@ import Icon from 'mastodon/components/icon';
 import Avatar from 'mastodon/components/avatar';
 import { counterRenderer } from 'mastodon/components/common_counter';
 import ShortNumber from 'mastodon/components/short_number';
-import { shortNumberFormat } from 'mastodon/utils/numbers';
 import { NavLink } from 'react-router-dom';
 import DropdownMenuContainer from 'mastodon/containers/dropdown_menu_container';
 import AccountNoteContainer from '../containers/account_note_container';
@@ -368,7 +367,10 @@ class Header extends ImmutablePureComponent {
 
               { (me === account.get('id')) && (
                 <NavLink exact activeClassName='active' to={`/accounts/${account.get('id')}/subscribing`} title={intl.formatNumber(account.get('subscribing_count'))}>
-                  <strong>{shortNumberFormat(account.get('subscribing_count'))}</strong> <FormattedMessage id='account.subscribes' defaultMessage='Subscribes' />
+                  <ShortNumber
+                    value={account.get('subscribing_count')}
+                    renderer={counterRenderer('subscribers')}
+                  />
                 </NavLink>
               )}
             </div>
