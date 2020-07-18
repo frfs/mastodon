@@ -1,0 +1,53 @@
+version: '3'
+services:
+
+#  app:
+#    build:
+#      context: ..
+#      dockerfile: frdn-dev/Dockerfile.dev
+#    environment:
+#      DB_HOST: 'db'
+#      DB_USER: 'postgres'
+#      REDIS_HOST: 'redis'
+#      DEFAULT_HASHTAG: 'frfr'
+#      DEFAULT_HASHTAG_ID: '1'
+#      SMTP_SERVER: 'mailhog'
+#      SMTP_PORT: '1025'
+#    volumes:
+#      - ..:/app
+#      - /app/.bundle
+#      - /app/build
+#      - /app/node_modules
+#      - /app/public/packs
+#      - /app/public/system
+#      - /app/tmp
+#      - /app/vendor/bundle
+#    ports:
+#      - 3000:3000
+#      - 4000:4000
+
+  db:
+    image: postgres:9.6-alpine
+    healthcheck:
+      test: ['CMD', 'pg_isready', '-U', 'postgres']
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    environment:
+      POSTGRES_HOST_AUTH_METHOD: 'trust'
+    ports:
+      - 5432:5432
+
+  redis:
+    image: redis:5.0-alpine
+    healthcheck:
+      test: ['CMD', 'redis-cli', 'ping']
+    volumes:
+      - redisdata:/data
+    ports:
+      - 6379:6379
+
+volumes:
+  pgdata:
+    driver: local
+  redisdata:
+    driver: local
