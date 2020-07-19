@@ -24,6 +24,11 @@
     .mini-avatar {
       .account__avatar-wrapper {
         margin: 2px 0;
+
+        img {
+          width: 24px;
+          height: 24px;
+        }
       }
     }
   }
