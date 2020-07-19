@@ -1,0 +1,25 @@
+FROM ruby:2.6.6
+
+ENV BIND=0.0.0.0
+ENV REMOTE_DEV=true
+
+WORKDIR /app
+
+COPY Aptfile ./
+RUN apt-get update && apt-get install -y \
+    $(cat Aptfile | xargs) \
+    nodejs \
+    npm
+
+COPY Gemfile Gemfile.lock ./
+RUN gem update --system && \
+    gem install bundler foreman --no-document && \
+    bundle config set frozen 'true' && \
+    bundle config set path 'vendor/bundle' && \
+    bundle install
+
+COPY package.json yarn.lock ./
+RUN npm install -g yarn && \
+    yarn install --pure-lockfile
+
+CMD ["foreman", "start"]

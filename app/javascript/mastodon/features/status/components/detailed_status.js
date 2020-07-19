@@ -209,27 +209,21 @@ class DetailedStatus extends ImmutablePureComponent {
       reblogLink = '';
     } else if (this.context.router) {
       reblogLink = (
-        <React.Fragment>
-          <React.Fragment> · </React.Fragment>
-          <Link to={`/statuses/${status.get('id')}/reblogs`} className='detailed-status__link'>
-            <Icon id={reblogIcon} />
-            <span className='detailed-status__reblogs'>
-              <AnimatedNumber value={status.get('reblogs_count')} />
-            </span>
-          </Link>
-        </React.Fragment>
+        <Link to={`/statuses/${status.get('id')}/reblogs`} className='detailed-status__link'>
+          <Icon id={reblogIcon} />
+          <span className='detailed-status__reblogs'>
+            <AnimatedNumber value={status.get('reblogs_count')} />
+          </span>
+        </Link>
       );
     } else {
       reblogLink = (
-        <React.Fragment>
-          <React.Fragment> · </React.Fragment>
-          <a href={`/interact/${status.get('id')}?type=reblog`} className='detailed-status__link' onClick={this.handleModalLink}>
-            <Icon id={reblogIcon} />
-            <span className='detailed-status__reblogs'>
-              <AnimatedNumber value={status.get('reblogs_count')} />
-            </span>
-          </a>
-        </React.Fragment>
+        <a href={`/interact/${status.get('id')}?type=reblog`} className='detailed-status__link' onClick={this.handleModalLink}>
+          <Icon id={reblogIcon} />
+          <span className='detailed-status__reblogs'>
+            <AnimatedNumber value={status.get('reblogs_count')} />
+          </span>
+        </a>
       );
     }
 
@@ -283,7 +277,7 @@ class DetailedStatus extends ImmutablePureComponent {
           <div className='detailed-status__meta'>
             <a className='detailed-status__datetime' href={status.get('url')} target='_blank' rel='noopener noreferrer'>
               <FormattedDate value={new Date(status.get('created_at'))} hour12={false} year='numeric' month='short' day='2-digit' hour='2-digit' minute='2-digit' />
-            </a>{applicationLink}
+            </a>{visibilityLink}{applicationLink}
           </div>
           <div className='detailed-status__meta rebfavs'>
             {reblogLink}
