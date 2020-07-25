@@ -39,7 +39,7 @@
   "account.subscribe": "購読",
   "account.subscribes": "購読",
   "account.subscribes.empty": "まだ誰も購読していません。",
-  "account.statuses_counter": "{counter} トゥート",
+  "account.statuses_counter": "{counter} 投稿",
   "account.unblock": "@{name}さんのブロックを解除",
   "account.unblock_domain": "{domain}のブロックを解除",
   "account.unendorse": "プロフィールから外す",

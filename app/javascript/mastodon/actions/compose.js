@@ -171,7 +171,6 @@ export function submitCompose(routerHistory, primary) {
 
       // To make the app more responsive, immediately push the status
       // into the columns
-
       const insertIfOnline = timelineId => {
         const timeline = getState().getIn(['timelines', timelineId]);
 
@@ -190,6 +189,7 @@ export function submitCompose(routerHistory, primary) {
           insertIfOnline('community');
         }
         insertIfOnline('public');
+        insertIfOnline(`account:${response.data.account.id}`);
       }
     }).catch(function (error) {
       dispatch(submitComposeFail(error));
