@@ -177,6 +177,7 @@ class FanOutOnWriteService < BaseService
   def deliver_to_public(status)
     Rails.logger.debug "Delivering status #{status.id} to public timeline"
 
+    Redis.current.publish('timeline:public', @payload)
     if status.local?
       Redis.current.publish('timeline:public:local', @payload)
     else
