@@ -90,7 +90,7 @@ class Status < ApplicationRecord
   scope :without_replies, -> { where('statuses.reply = FALSE OR statuses.in_reply_to_account_id = statuses.account_id') }
   scope :without_reblogs, -> { where('statuses.reblog_of_id IS NULL') }
   scope :with_public_visibility, -> { where(visibility: :public) }
-  scope :tagged_with, ->(tags, params = {}) { where(id: StatusesTags.select('status_id').tags_status_ids(tags).paginate_by_id(Api::BaseController::DEFAULT_STATUSES_LIMIT*10, params)) }
+  scope :tagged_with, ->(tag) { joins(:statuses_tags).where(statuses_tags: { tag_id: tag }) }
   scope :excluding_silenced_accounts, -> { left_outer_joins(:account).where(accounts: { silenced_at: nil }) }
   scope :including_silenced_accounts, -> { left_outer_joins(:account).where.not(accounts: { silenced_at: nil }) }
   scope :not_excluded_by_account, ->(account) { where.not(account_id: account.excluded_from_timeline_account_ids) }
@@ -299,18 +299,8 @@ class Status < ApplicationRecord
       apply_timeline_filters(query, account, [:local, true].include?(local_only))
     end
 
-    def as_domain_timeline(account = nil, domain)
-      query = Status.includes(:account)
-        .where(accounts: {domain: domain}).select('statuses.*, accounts.*')
-        .with_public_visibility
-        .without_reblogs
-        .without_replies
-
-      apply_timeline_filters(query, account, false)
-    end
-
-    def as_tag_timeline(tags, params = {}, account = nil, local_only = false)
-      query = timeline_scope(local_only).tagged_with(tags, params)
+    def as_tag_timeline(tag, account = nil, local_only = false)
+      query = timeline_scope(local_only).tagged_with(tag)
 
       apply_timeline_filters(query, account, local_only)
     end
