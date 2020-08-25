@@ -7,6 +7,7 @@ import DropdownMenuContainer from '../containers/dropdown_menu_container';
 import { defineMessages, injectIntl, FormattedNumber } from 'react-intl';
 import ImmutablePureComponent from 'react-immutable-pure-component';
 import { me, isStaff } from '../initial_state';
+import classNames from 'classnames';
 
 const messages = defineMessages({
   delete: { id: 'status.delete', defaultMessage: 'Delete' },
@@ -333,7 +334,7 @@ class StatusActionBar extends ImmutablePureComponent {
           <span className='status__action-bar__counter__label'>{obfuscatedCount(status.get('replies_count'))}</span>
 
           <IconButton
-            className='status__action-bar-button'
+            className={classNames('status__action-bar-button', { reblogPrivate })}
             disabled={!publicStatus && !reblogPrivate}
             active={status.get('reblogged')}
             pressed={status.get('reblogged')}
@@ -358,7 +359,6 @@ class StatusActionBar extends ImmutablePureComponent {
             <FormattedNumber value={status.get('favourites_count')} />
           </span>
         </div>
-
         {shareButton}
 
         <div className='status__action-bar-dropdown'>
