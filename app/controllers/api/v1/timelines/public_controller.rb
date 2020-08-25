@@ -40,7 +40,7 @@ class Api::V1::Timelines::PublicController < Api::BaseController
 
   def public_timeline_statuses
     if truthy_param?(:local)
-      Status.as_tag_timeline(Rails.configuration.x.default_hashtag_id, params.slice(:max_id, :since_id, :min_id), current_account, false)
+      Status.as_tag_timeline(Rails.configuration.x.default_hashtag_id, current_account, false)
     elsif params[:domain].present?
       Status.as_domain_timeline(current_account, params[:domain])
     else
