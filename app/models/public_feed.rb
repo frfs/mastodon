@@ -62,7 +62,7 @@ class PublicFeed < Feed
   end
 
   def local_only_scope
-    Status.local
+    Status.tagged_with(Rails.configuration.x.default_hashtag_id)
   end
 
   def remote_only_scope
