@@ -3,7 +3,6 @@ import ImmutablePropTypes from 'react-immutable-proptypes';
 import PropTypes from 'prop-types';
 import { defineMessages, injectIntl, FormattedMessage } from 'react-intl';
 import Button from 'mastodon/components/button';
-import IconButton from 'mastodon/components/icon_button';
 import ImmutablePureComponent from 'react-immutable-pure-component';
 import { autoPlayGif, me, isStaff } from 'mastodon/initial_state';
 import classNames from 'classnames';
