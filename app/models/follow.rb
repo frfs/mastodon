@@ -11,6 +11,7 @@
 #  show_reblogs      :boolean          default(TRUE), not null
 #  uri               :string
 #  private           :boolean          default(TRUE), not null
+#  notify            :boolean          default(FALSE), not null
 #
 
 class Follow < ApplicationRecord
@@ -35,7 +36,7 @@ class Follow < ApplicationRecord
   end
 
   def revoke_request!
-    FollowRequest.create!(account: account, target_account: target_account, show_reblogs: show_reblogs, uri: uri)
+    FollowRequest.create!(account: account, target_account: target_account, show_reblogs: show_reblogs, notify: notify, uri: uri)
     destroy!
   end
 
