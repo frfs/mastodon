@@ -336,10 +336,8 @@ class StatusActionBar extends ImmutablePureComponent {
           title={reblogTitle}
           icon='retweet'
           onClick={this.handleReblogClick}
+          counter={status.get('reblogs_count')}
         />
-        <span className='status__action-bar__counter__label'>
-          <FormattedNumber value={status.get('reblogs_count')} />
-        </span>
 
         <IconButton
           className='status__action-bar-button star-icon'
@@ -349,10 +347,8 @@ class StatusActionBar extends ImmutablePureComponent {
           title={intl.formatMessage(messages.favourite)}
           icon='star'
           onClick={this.handleFavouriteClick}
+          counter={status.get('favourites_count')}
         />
-        <span className='status__action-bar__counter__label'>
-          <FormattedNumber value={status.get('favourites_count')} />
-        </span>
         {shareButton}
 
         <div className='status__action-bar-dropdown'>
