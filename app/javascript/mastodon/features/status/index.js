@@ -165,9 +165,9 @@ const makeMapStateToProps = () => {
       descendantsIds,
       askReplyConfirmation: state.getIn(['compose', 'text']).trim().length !== 0,
       domain: state.getIn(['meta', 'domain']),
-
       rebloggedAccountIds,
       favouritedAccountIds,
+      usingPiP: state.get('picture_in_picture').statusId === props.params.statusId,
     };
   };
 
@@ -192,9 +192,7 @@ class Status extends ImmutablePureComponent {
     askReplyConfirmation: PropTypes.bool,
     multiColumn: PropTypes.bool,
     domain: PropTypes.string.isRequired,
-
-    rebloggedAccountIds: ImmutablePropTypes.list,
-    favouritedAccountIds: ImmutablePropTypes.list,
+    usingPiP: PropTypes.bool,
   };
 
   state = {
@@ -526,7 +524,7 @@ class Status extends ImmutablePureComponent {
 
   render () {
     let ancestors, descendants;
-    const { shouldUpdateScroll, status, ancestorsIds, descendantsIds, intl, domain, multiColumn } = this.props;
+    const { shouldUpdateScroll, status, ancestorsIds, descendantsIds, intl, domain, multiColumn, usingPiP } = this.props;
     const { fullscreen } = this.state;
 
     const { rebloggedAccountIds, favouritedAccountIds } = this.props;
@@ -588,6 +586,7 @@ class Status extends ImmutablePureComponent {
                   onToggleMediaVisibility={this.handleToggleMediaVisibility}
                   rebloggedAccountIds={rebloggedAccountIds}
                   favouritedAccountIds={favouritedAccountIds}
+                  usingPiP={usingPiP}
                 />
 
                 <ActionBar
