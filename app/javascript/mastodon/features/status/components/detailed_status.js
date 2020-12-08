@@ -43,7 +43,10 @@ class DetailedStatus extends ImmutablePureComponent {
     domain: PropTypes.string.isRequired,
     compact: PropTypes.bool,
     showMedia: PropTypes.bool,
-    usingPiP: PropTypes.bool,
+    pictureInPicture: ImmutablePropTypes.contains({
+      inUse: PropTypes.bool,
+      available: PropTypes.bool,
+    }),
     onToggleMediaVisibility: PropTypes.func,
     intl: PropTypes.object.isRequired,
     rebloggedAccountIds: ImmutablePropTypes.list,
@@ -63,8 +66,8 @@ class DetailedStatus extends ImmutablePureComponent {
     e.stopPropagation();
   }
 
-  handleOpenVideo = (media, options) => {
-    this.props.onOpenVideo(media, options);
+  handleOpenVideo = (options) => {
+    this.props.onOpenVideo(this.props.status.getIn(['media_attachments', 0]), options);
   }
 
   handleExpandedToggle = () => {
@@ -107,7 +110,7 @@ class DetailedStatus extends ImmutablePureComponent {
   render () {
     const status = (this.props.status && this.props.status.get('reblog')) ? this.props.status.get('reblog') : this.props.status;
     const outerStyle = { boxSizing: 'border-box' };
-    const { compact, intl, rebloggedAccountIds, favouritedAccountIds, usingPiP } = this.props;
+    const { compact, intl, rebloggedAccountIds, favouritedAccountIds, pictureInPicture } = this.props;
 
     if (!status) {
       return null;
@@ -127,7 +130,7 @@ class DetailedStatus extends ImmutablePureComponent {
       outerStyle.height = `${this.state.height}px`;
     }
 
-    if (usingPiP) {
+    if (pictureInPicture.get('inUse')) {
       media = <PictureInPicturePlaceholder />;
     } else if (status.get('media_attachments').size > 0) {
       if (status.getIn(['media_attachments', 0, 'type']) === 'audio') {
